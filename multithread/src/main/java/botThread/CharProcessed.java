@@ -1,9 +1,10 @@
 package botThread;
 
 public class CharProcessed {
-	char letter;
-	boolean exists;
-	int order;
+
+	private char letter;
+	private boolean exists;
+	private int order;
 
 	public CharProcessed(char letter)
 	{
@@ -18,8 +19,24 @@ public class CharProcessed {
 		this.order = order;
 	}
 
+	public boolean isExists() {
+		return this.exists;
+	}
+
+	public int getOrder() {
+		return this.order;
+	}
+
+	public char getLetter() {
+		return this.letter;
+	}
+
 	@Override
 	public String toString() {
-		return "" + this.letter;
+		return "{" +
+			" letter='" + getLetter() + "'" +
+			", exists='" + isExists() + "'" +
+			", order='" + getOrder() + "'" +
+			"}";
 	}
 }

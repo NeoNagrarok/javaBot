@@ -1,13 +1,16 @@
 package multithread;
 
+import botThread.Parser;
+
 /**
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        Parser parser = new Parser();
+        System.out.println("Match : " + parser.process("Slt"));
     }
 }

@@ -1,4 +1,4 @@
-package multithread.mainThread;
+package mainThread;
 
 public class mainThread {
 	
