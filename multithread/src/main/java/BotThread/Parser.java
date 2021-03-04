@@ -92,6 +92,7 @@ public class Parser {
 				this.displayMatchingDetails();
 				return pattern;
 			}
+			// this.resetProcess();
 		}
 		return "The cake is a lie";
 	}
@@ -146,6 +147,14 @@ public class Parser {
 		this.existPercentage = existenceCounter * 100 / this.inputLength;
 	}
 
+	private void resetProcess()
+	{
+		for (int i = 0; i < this.inputLength; i++)
+		{
+			this.inputProcessed.get(i).reset();
+		}
+	}
+
 	private void convertProcess(String input, String pattern)
 	{
 		this.inputProcessed = this.inputProcess(input);
@@ -160,6 +169,7 @@ public class Parser {
 					{
 						letter.exists(j);
 						patternSplitted[j] = 0x200E;
+						break;
 					}
 				}
 	}
