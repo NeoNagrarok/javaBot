@@ -54,15 +54,15 @@ public class Parser {
 		/**
 		 * TODO Replace hard coded pattern here by objects made from files
 		 */
-		ArrayList<String> patterns = new ArrayList<>();
+		ArrayList<Pattern> patterns = new ArrayList<>();
 
 		/**
 		 * For tests purposes
 		 */
-		patterns.add("Salut");
-		patterns.add("Test");
-		patterns.add("Toto");
-		patterns.add("Les cerveaux malades");
+		patterns.add(new Pattern("Salut", "Salut"));
+		patterns.add(new Pattern("Test", "Test réussi"));
+		patterns.add(new Pattern("Toto", "Tutu"));
+		patterns.add(new Pattern("Les cerveaux malades", "C'est nous"));
 		/**
 		 * End test set
 		*/
@@ -73,7 +73,7 @@ public class Parser {
 		int patternsSize = patterns.size();
 		for (int i = 0; i < patternsSize; i++)
 		{
-			String pattern = patterns.get(i);
+			String pattern = patterns.get(i).getTemplate();
 			this.convertProcess(input, pattern);
 
 			this.existsProcess();
@@ -90,7 +90,7 @@ public class Parser {
 			if (this.globalPercentage > this.accuracy)
 			{
 				this.displayMatchingDetails();
-				return pattern;
+				return patterns.get(i).getResponse();
 			}
 			// this.resetProcess();
 		}
