@@ -1,6 +1,9 @@
 package gui;
 
 import javax.swing.*;
+
+import BotThread.BotThread;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,25 +22,26 @@ public class ChatGui extends JFrame {
     private JTextField textFieldSubmit;
     private JPanel JPanelPrincipal;
     private JPanel JPanelChat;
+    private final GridBagConstraints gc = new GridBagConstraints();
+    private BotThread bot;
+
 
     private static ChatGui chatGui;
 
 
-    public ChatGui() {
+    public ChatGui(BotThread bot) {
 
-        final GridBagConstraints gc = new GridBagConstraints();
+        // final GridBagConstraints gc = new GridBagConstraints();
 
-        gc.gridx = 1;
+        this.bot = bot;
+        this.gc.gridx = 1;
 
-        JPanelChat = new JPanel();
-        JPanelPrincipal = new JPanel();
-        textFieldSubmit = new JTextField(20);
+        this.JPanelChat = new JPanel();
+        this.JPanelPrincipal = new JPanel();
+        this.textFieldSubmit = new JTextField(20);
         getJPanelChat().setBackground(Color.cyan);
-        JPanelChat.add(textFieldSubmit);
-        JPanelChat.add(new JButton(new AbstractAction("Envoyer") {
-            /**
-             *
-             */
+        this.JPanelChat.add(textFieldSubmit);
+        this.JPanelChat.add(new JButton(new AbstractAction("Envoyer") {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -46,21 +50,29 @@ public class ChatGui extends JFrame {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        JPanelChat.add(new JLabel(textFieldSubmit.getText() + "Toto"), gc);
-                        gc.gridx = 3;
-                        JPanelChat.validate();
-                        JPanelChat.repaint();
+                        addStringToGUI(textFieldSubmit.getText());
                     }
                 });
             }
-        }), gc);
+        }), this.gc);
 
 
 
         JPanelChat.setVisible(true);
     }
 
-
+    public void addStringToGUI(String input)
+    {
+        JPanelChat.add(new JLabel(input), this.gc);
+        this.gc.gridx = 3;
+        JPanelChat.validate();
+        JPanelChat.repaint();
+        synchronized(bot)
+        {
+            this.bot.notify();
+            this.bot.setInput(input);
+        }
+    }
 
 
     public void envoyerMessage(String message) {
@@ -82,9 +94,9 @@ public class ChatGui extends JFrame {
         return chatGui != null;
     }
 
-    public static ChatGui ouvrirFenetrePrincipale() {
+    public static ChatGui ouvrirFenetrePrincipale(BotThread bot) {
         if (chatGui == null) {
-            chatGui = new ChatGui();
+            chatGui = new ChatGui(bot);
         }
         chatGui.setVisible(true);
         return chatGui;

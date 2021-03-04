@@ -1,4 +1,4 @@
-package botThread;
+package BotThread;
 
 public class CharProcessed {
 
