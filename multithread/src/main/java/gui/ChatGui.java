@@ -12,6 +12,10 @@ import java.awt.event.WindowAdapter;
  * @project javaBot
  */
 public class ChatGui extends JFrame {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private JTextField textFieldSubmit;
     private JPanel JPanelPrincipal;
     private JPanel JPanelChat;
@@ -21,22 +25,27 @@ public class ChatGui extends JFrame {
 
     public ChatGui() {
 
-
-        getJPanelChat().setBackground(Color.cyan);
-
-        GridBagConstraints gc = new GridBagConstraints();
+        final GridBagConstraints gc = new GridBagConstraints();
 
         gc.gridx = 1;
 
-
+        JPanelChat = new JPanel();
+        JPanelPrincipal = new JPanel();
+        textFieldSubmit = new JTextField();
+        getJPanelChat().setBackground(Color.cyan);
         JPanelChat.add(new JButton(new AbstractAction("Envoyer") {
+            /**
+             *
+             */
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        JPanelChat.add(new JLabel(textFieldSubmit.getText()), gc);
+                        JPanelChat.add(new JLabel(textFieldSubmit.getText() + "Toto"), gc);
                         gc.gridx = 3;
                         JPanelChat.validate();
                         JPanelChat.repaint();
