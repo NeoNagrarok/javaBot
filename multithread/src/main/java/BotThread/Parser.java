@@ -1,4 +1,4 @@
-package botThread;
+package BotThread;
 
 import java.util.ArrayList;
 

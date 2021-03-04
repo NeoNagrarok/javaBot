@@ -1,6 +1,7 @@
 package multithread;
 
-import botThread.Parser;
+import BotThread.BotThread;
+import BotThread.Parser;
 import gui.MainGui;
 
 /**
@@ -11,8 +12,15 @@ public class App
 {
     public static void main( String[] args )
     {
-        Parser parser = new Parser();
-        System.out.println("Match : " + parser.process("Slt"));
-        MainGui.display();
+        BotThread bot = new BotThread();
+        Thread botThread = new Thread(bot);
+
+        botThread.start();
+
+        // Parser parser = new Parser();
+        // System.out.println("Match : " + parser.process("Slt"));
+
+        MainGui.display(bot);
+
     }
 }
