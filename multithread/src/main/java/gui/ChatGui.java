@@ -2,16 +2,14 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
+import java.awt.event.*;
 
 /**
  * @author tommy
  * @created 03/03/2021 - 09:38
  * @project javaBot
  */
-public class ChatGui extends JFrame {
+public class ChatGui extends JFrame implements ActionListener, KeyListener {
     /**
      *
      */
@@ -34,7 +32,9 @@ public class ChatGui extends JFrame {
         textFieldSubmit = new JTextField(20);
         getJPanelChat().setBackground(Color.cyan);
         JPanelChat.add(textFieldSubmit);
-        JPanelChat.add(new JButton(new AbstractAction("Envoyer") {
+
+
+        JButton buttonSubmit = new JButton(new AbstractAction("Envoyer") {
             /**
              *
              */
@@ -43,35 +43,38 @@ public class ChatGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JPanelChat.add(new JLabel(textFieldSubmit.getText() + "Toto"), gc);
-                        gc.gridx = 3;
-                        JPanelChat.validate();
-                        JPanelChat.repaint();
-                    }
-                });
+
+                String composant = e.getActionCommand();
+                System.out.println("Action sur le composant : " + composant);
+                textFieldSubmit.addActionListener(this);
+                String s = e.getActionCommand();
+                if (e.getSource() == textFieldSubmit || s.equals("Envoyer")) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            JPanelChat.add(new JLabel(textFieldSubmit.getText()), gc);
+                            gc.gridx = 3;
+                            JPanelChat.validate();
+                            JPanelChat.repaint();
+                        }
+                    });
+                }
             }
-        }), gc);
+        });
+        buttonSubmit.addActionListener(this);
 
 
+        JPanelChat.add(buttonSubmit, gc);
 
         JPanelChat.setVisible(true);
     }
 
 
-
-
     public void envoyerMessage(String message) {
-
-
 
 
         System.out.println("envoyé");
     }
-
-
 
 
     public static ChatGui getFenetrePrincipale() {
@@ -132,6 +135,30 @@ public class ChatGui extends JFrame {
      */
     public static ChatGui getChatGui() {
         return chatGui;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+
+        if (keyEvent.getKeyCode() == 10) {
+
+        }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
     }
 }
 
