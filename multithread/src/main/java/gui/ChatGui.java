@@ -31,8 +31,9 @@ public class ChatGui extends JFrame {
 
         JPanelChat = new JPanel();
         JPanelPrincipal = new JPanel();
-        textFieldSubmit = new JTextField();
+        textFieldSubmit = new JTextField(20);
         getJPanelChat().setBackground(Color.cyan);
+        JPanelChat.add(textFieldSubmit);
         JPanelChat.add(new JButton(new AbstractAction("Envoyer") {
             /**
              *
@@ -53,6 +54,7 @@ public class ChatGui extends JFrame {
                 });
             }
         }), gc);
+
 
 
         JPanelChat.setVisible(true);
