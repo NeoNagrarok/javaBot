@@ -24,4 +24,17 @@ public class MainGui {
 
     }
 
+    public static void display()
+    {
+        JFrame frame = ChatGui.ouvrirFenetrePrincipale();
+
+        // JFrame frame = new JFrame("ChatGui");
+        
+        frame.setPreferredSize(new Dimension(500, 500));
+        frame.setContentPane(new ChatGui().getJPanelChat());
+        frame.setBackground(Color.cyan);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+    }
+
 }

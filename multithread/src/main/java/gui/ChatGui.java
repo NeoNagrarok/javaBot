@@ -12,40 +12,41 @@ import java.awt.event.WindowAdapter;
  * @project javaBot
  */
 public class ChatGui extends JFrame {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private JTextField textFieldSubmit;
     private JPanel JPanelPrincipal;
     private JPanel JPanelChat;
-    private JButton button1;
 
     private static ChatGui chatGui;
 
 
     public ChatGui() {
 
-        textFieldSubmit = new JTextField();
-
-        getJPanelChat().setBackground(Color.cyan);
-
-        GridBagConstraints gc = new GridBagConstraints();
+        final GridBagConstraints gc = new GridBagConstraints();
 
         gc.gridx = 1;
-        gc.weightx = 1;
-        gc.fill = GridBagConstraints.HORIZONTAL;
 
-
-        JPanelChat.add(textFieldSubmit, gc);
-
-        gc.weightx = 0;
-        gc.fill = GridBagConstraints.NONE;
-
+        JPanelChat = new JPanel();
+        JPanelPrincipal = new JPanel();
+        textFieldSubmit = new JTextField(20);
+        getJPanelChat().setBackground(Color.cyan);
+        JPanelChat.add(textFieldSubmit);
         JPanelChat.add(new JButton(new AbstractAction("Envoyer") {
+            /**
+             *
+             */
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        JPanelChat.add(new JLabel(textFieldSubmit.getText()), gc);
+                        JPanelChat.add(new JLabel(textFieldSubmit.getText() + "Toto"), gc);
                         gc.gridx = 3;
                         JPanelChat.validate();
                         JPanelChat.repaint();
@@ -53,6 +54,7 @@ public class ChatGui extends JFrame {
                 });
             }
         }), gc);
+
 
 
         JPanelChat.setVisible(true);
