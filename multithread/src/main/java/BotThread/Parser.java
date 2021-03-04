@@ -1,11 +1,16 @@
 package BotThread;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import jdk.internal.util.xml.impl.Input;
 
 public class Parser {
 	private int accuracy;
+
+	private ArrayList<Pattern> patterns;
 
 	private ArrayList<CharProcessed> inputProcessed;
 
@@ -47,6 +52,8 @@ public class Parser {
 		this.existCoef = 5;
 		this.lengthCoef = 1;
 		this.orderCoef = 3;
+
+		this.patterns = this.readMemory();
 	}
 
 	public String process(String input)
@@ -54,26 +61,15 @@ public class Parser {
 		/**
 		 * TODO Replace hard coded pattern here by objects made from files
 		 */
-		ArrayList<Pattern> patterns = new ArrayList<>();
 
-		/**
-		 * For tests purposes
-		 */
-		patterns.add(new Pattern("Salut", "Salut"));
-		patterns.add(new Pattern("Test", "Test réussi"));
-		patterns.add(new Pattern("Toto", "Tutu"));
-		patterns.add(new Pattern("Les cerveaux malades", "C'est nous"));
-		/**
-		 * End test set
-		*/
 
 		System.out.println("Input : " + input);
 		this.inputLength = input.length();
 
-		int patternsSize = patterns.size();
+		int patternsSize = this.patterns.size();
 		for (int i = 0; i < patternsSize; i++)
 		{
-			String pattern = patterns.get(i).getTemplate();
+			String pattern = this.patterns.get(i).getTemplate();
 			this.convertProcess(input, pattern);
 
 			this.existsProcess();
@@ -90,11 +86,34 @@ public class Parser {
 			if (this.globalPercentage > this.accuracy)
 			{
 				this.displayMatchingDetails();
-				return patterns.get(i).getResponse();
+				return this.patterns.get(i).getResponse();
 			}
 			// this.resetProcess();
 		}
 		return "The cake is a lie";
+	}
+
+	private ArrayList<Pattern> readMemory()
+	{
+		ArrayList<Pattern> patterns = new ArrayList<>();
+
+		try
+		{
+			File myObj = new File("memory");
+			Scanner myReader = new Scanner(myObj);
+			while (myReader.hasNextLine())
+			{
+				String[] split = myReader.nextLine().split("<->");
+				patterns.add(new Pattern(split[0], split[1]));
+			}
+			myReader.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.println("File memory not found !");
+			e.printStackTrace();
+		}
+		return patterns;
 	}
 
 	private void averageProcess(String pattern)
