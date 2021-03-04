@@ -31,6 +31,12 @@ public class CharProcessed {
 		return this.letter;
 	}
 
+	public void reset()
+	{
+		this.exists = false;
+		this.order = -1;
+	}
+
 	@Override
 	public String toString() {
 		return "{" +
