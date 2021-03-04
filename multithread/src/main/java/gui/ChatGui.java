@@ -15,19 +15,28 @@ public class ChatGui extends JFrame {
     private JTextField textFieldSubmit;
     private JPanel JPanelPrincipal;
     private JPanel JPanelChat;
+    private JButton button1;
 
     private static ChatGui chatGui;
 
 
     public ChatGui() {
 
+        textFieldSubmit = new JTextField();
 
         getJPanelChat().setBackground(Color.cyan);
 
         GridBagConstraints gc = new GridBagConstraints();
 
         gc.gridx = 1;
+        gc.weightx = 1;
+        gc.fill = GridBagConstraints.HORIZONTAL;
 
+
+        JPanelChat.add(textFieldSubmit, gc);
+
+        gc.weightx = 0;
+        gc.fill = GridBagConstraints.NONE;
 
         JPanelChat.add(new JButton(new AbstractAction("Envoyer") {
             @Override
