@@ -20,11 +20,12 @@ public class BotThread implements Runnable {
 		System.out.println("Start thread");
 		while (true)
 		{
-			if (!this.input.equals(""))
-			{
-				String response = parser.process(this.input);
-				System.out.println("Bot : " + response);
-				this.chatGui.addStringToGUI("Bot : " + response);
+			if (!this.input.equals("")) {
+				if (!this.input.equals("Conversation nettoyées !")){
+					String response = parser.process(this.input);
+					System.out.println("Bot : " + response);
+					this.chatGui.addStringToGUI("Bot : " + response);
+				}
 			}
 			synchronized (this)
 			{
