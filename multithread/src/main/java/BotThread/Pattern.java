@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Pattern {
 		this.response = response;
 		this.responseType.add("notroll");
 		this.responseType.add("shuffle");
-		this.responseType.add("morse");
+		this.responseType.add("giphy");
 	}
 
 	public String getTemplate() {
@@ -76,18 +77,26 @@ public class Pattern {
 			.replaceAll(", ", "");
 	}
 
-	private String morse()
+	private String giphy()
 	{
 		try {
-			this.MyGETRequest("https://api.funtranslations.com/translate/morse.json?text=Tommy%20sucks");
+			JsonObject jsonObject = this.MyGETRequest("https://api.giphy.com/v1/gifs/search?api_key=0kDGaUr8lKSVNNGsEFLoEp7MXEl2JV6n&q=" + URLEncoder.encode(this.response) + "&limit=1&offset=0&rating=g&lang=en");
+
+			if (jsonObject != null)
+			{
+				/**
+				 * export to specialized method
+				 */
+				return jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("images").getAsJsonObject().get("original").getAsJsonObject().get("url").toString();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "Api test";
+		return "Je n'ai rien à te dire.";
 	}
 
-	public void MyGETRequest(String url) throws IOException {
+	public JsonObject MyGETRequest(String url) throws IOException {
 		URL urlForGetRequest = new URL(url);
 		String readLine = null;
 		HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
@@ -104,12 +113,13 @@ public class Pattern {
 				response.append(readLine);
 			} in .close();
 			// print result
-			System.out.println("JSON String Result " + response.toString());
-			JsonObject jsonObject = new JsonParser().parse(response.toString()).getAsJsonObject();
-			// jsonObject.get("contents").getAsString());
+			// System.out.println("JSON String Result " + response.toString());
+			return new JsonParser().parse(response.toString()).getAsJsonObject();
+
 			//GetAndPost.POSTRequest(response.toString());
 		} else {
-			System.out.println("GET NOT WORKED");
+			System.out.println("GET NOT WORKED : " + responseCode);
+			return null;
 		}
 	
 	}
