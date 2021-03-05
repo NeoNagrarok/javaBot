@@ -87,7 +87,7 @@ public class Pattern {
 				/**
 				 * export to specialized method
 				 */
-				return jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("images").getAsJsonObject().get("original").getAsJsonObject().get("url").toString();
+				return jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject().get("images").getAsJsonObject().get("original").getAsJsonObject().get("url").toString().replace("\"", "");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
